@@ -4,3 +4,6 @@
 .idea
 /project/target/
 target
+.git
+.metals
+.bloop
