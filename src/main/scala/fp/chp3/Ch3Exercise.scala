@@ -1,5 +1,3 @@
-package fp.chp3datastructures
-
 /**
  * see Definition.scala
  */

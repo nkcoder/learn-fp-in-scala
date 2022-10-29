@@ -1,5 +1,3 @@
-package fp.ch2getstarted
-
 // factorial: f(n) = 1 * 2 * ... * (n - 1) * n
 def factorial(n: Int): Int =
   @annotation.tailrec

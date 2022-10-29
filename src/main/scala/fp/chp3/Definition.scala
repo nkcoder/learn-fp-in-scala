@@ -1,4 +1,4 @@
-package fp.chp3datastructures
+import fp.chp3datastructures.List.foldRight
 
 import scala.annotation.tailrec
 
@@ -99,6 +99,38 @@ object List:
     case Cons(_, Nil) => Nil
     case Cons(h, t) => Cons(h, init(t))
 
+  /**
+   * exercise 3.7 TODO
+   * Can product, implemented using foldRight, immediately halt the recursion and return 0.0 if it encounters a 0.0?
+   * Why or why not? Consider how any short-circuiting might work if you call foldRight with a large list. This is a
+   * deeper question that we’ll return to in chapter 5.
+   */
+
+  /**
+   * exercise 3.8 TODO
+   * See what happens when you pass Nil and Cons themselves to foldRight,
+   * like this: foldRight(List(1, 2, 3), Nil: List[Int], Cons(_, _)).24 What do you think this says about the
+   * relationship between foldRight and the data constructors of List?
+   */
+  // val fold1 = foldRight(List(1, 2, 3), Nil: List[Int], Cons(_, _))
+  // println(s"fold1 = $fold1") // fold1 = Cons(1,Cons(2,Cons(3,Nil)))
+
+  /**
+   * exercise 3.9
+   * Compute the length of a list using foldRight.
+   */
+  def lengthViaFoldRight[A](as: List[A]): Int = foldRight(as, 0, (_, y) => 1 + y)
+
+  /**
+   * exercise 3.10
+   * Our implementation of foldRight is not tail-recursive and will result in a StackOverflowError for large lists
+   * (we say it’s not stack-safe). Convince yourself that this is the case, and then write another general list-recursion
+   * function, foldLeft, that is tail-recursive, using the techniques we discussed in
+   * the previous chapter. Here is its signature
+   */
+  // def foldLeft[A, B](as: List[A], acc: B, f: (B, A) => B): B = ()
+
+
 
 @main def definition(): Unit =
   import List.*
@@ -124,4 +156,11 @@ object List:
 
   val nums4 = List(10, 20, 30, 40, 50)
   println(s"init = ${init(nums4)}")
+
+  val fold1 = foldRight(List(1, 2, 3), Nil: List[Int], Cons(_, _))
+  println(s"fold1 = $fold1") // fold1 = Cons(1,Cons(2,Cons(3,Nil)))
+
+  val length1 = lengthViaFoldRight(List(1, 3, 5, 7, 9, 11, 0))
+  println(s"length1 = $length1")
+
 

@@ -1,13 +1,11 @@
-package fp.chp2getstarted
-
 def findFirst[A](as: Array[A], p: A => Boolean): Int =
   @annotation.tailrec
-  def loop(n: Int): Int = 
+  def go(n: Int): Int = 
     if n >= as.length then -1
     else if p(as(n)) then n
-    else loop(n + 1)
+    else go(n + 1)
 
-  loop(0)
+  go(0)
 
 
 @main def polymorphicFunctions() = 
