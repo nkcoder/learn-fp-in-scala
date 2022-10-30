@@ -1,4 +1,4 @@
-import fp.chp3datastructures.List.foldRight
+package fp.chp2
 
 import scala.annotation.tailrec
 
@@ -143,6 +143,7 @@ object List:
     case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
     case Cons(h, t) => h + sum(t)
     case _ => 101
+
   println(s"r1 = $r1")
 
   val nums1 = List(1, 2, 5, 4, 90, 10, 45)
