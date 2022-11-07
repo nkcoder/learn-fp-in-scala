@@ -8,7 +8,7 @@ enum MyTree[+A]:
 
 
 object MyTree:
-  extension (t: MyTree[Int]) def firstPositive: Option[Int] = t match
+  extension (t: MyTree[Int]) def firstPositive: scala.Option[Int] = t match
     case Leaf(i) => if i > 0 then Some(i) else None
     case Branch(l, r) => l.firstPositive orElse r.firstPositive
 
