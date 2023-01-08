@@ -1,36 +1,36 @@
 package fp.chp6
 
-trait MyRandom:
-  def nextInt: (Int, MyRandom)
+trait RNG:
+  def nextInt: (Int, RNG)
 
-type Rand[+A] = MyRandom => (A, MyRandom)
+type Rand[+A] = RNG => (A, RNG)
 
-object MyRandom:
-  case class SimpleRandom(seed: Long) extends MyRandom:
-    def nextInt: (Int, MyRandom) =
+object RNG:
+  case class SimpleRandom(seed: Long) extends RNG:
+    def nextInt: (Int, RNG) =
       val newSeed = (seed * 0x5deece66dL + 0xbL) & 0xffffffffffffL
       val nextRandom = SimpleRandom(newSeed)
       val n = (newSeed >>> 16).toInt
       (n, nextRandom)
 
-  def nonNegativeInt(random: MyRandom): (Int, MyRandom) =
+  def nonNegativeInt(random: RNG): (Int, RNG) =
     val (n, r) = random.nextInt
     val n0 = if n < 0 then math.abs(n + 1) else n
     (n0, r)
 
-  def double(random: MyRandom): (Double, MyRandom) =
+  def double(random: RNG): (Double, RNG) =
     val (n, r) = nonNegativeInt(random)
     (n.toDouble / Int.MaxValue, r)
 
-  def ints(count: Int)(random: MyRandom): (List[Int], MyRandom) =
+  def ints(count: Int)(random: RNG): (List[Int], RNG) =
     if count <= 0 then (List(), random)
     else
       val (n, r) = random.nextInt
       val (n0, r0) = ints(count - 1)(r)
       (n :: n0, r0)
 
-  def ints2(count: Int)(random: MyRandom): (List[Int], MyRandom) =
-    def go(c: Int, r: MyRandom, result: List[Int]): (List[Int], MyRandom) =
+  def ints2(count: Int)(random: RNG): (List[Int], RNG) =
+    def go(c: Int, r: RNG, result: List[Int]): (List[Int], RNG) =
       if c <= 0 then (List(), r)
       else
         val (n1, r1) = r.nextInt
@@ -89,4 +89,4 @@ object MyRandom:
 
     def apply[S, A](f: S => (A, S)): State[S, A] = f
 
-    def unit[S, A](a: A): State[S, A] = s => (a, S)
+    def unit[S, A](a: A): State[S, A] = s => (a, s)
